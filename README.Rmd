@@ -1,0 +1,77 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# codemogAPI R Package
+
+NOTE: This package and the APIs that it wraps are in constant development right now.  This package should not be used for any actual data work as the API server isn't currently at a stable URL. This note will be removed when this is finished and the version number bumped to 0.1.1 from 0.1.0.
+
+The `codemogAPI` package is built as the R interface to the Colorado State Demography Office data API set. 
+
+Eventually, this package will allow the use to pull any of the State Demography Office data for Colorado and most geographies in the U.S. and tables from the American Community Survey 2012, 2013, and 2014 5-year Files and the 1980, 1990, 2000, and 2010 Decennial Census'.  A list of currently included data is below.
+
+Currently Included Data:
+
+* County Population estimates from 2010 to 2014 for Colorado Counties
+* Municipal Populations estimates from 2010 to 2014 in total or divided up into county specific parts.
+
+
+## Installation
+
+* From GitHub (currently the only method)
+
+```R
+if (packageVersion("devtools") < 1.6) {
+      install.packages("devtools")
+    }
+    devtools::install_github("ColoradoDemography/codemogAPI")
+```
+
+## County Population Estimates
+
+County population estimates are currently broken down into two datasets: historical populations (from 1980 to 2009) and current population estimates (2010 to 2014).  The difference involves revisions.  Historical data are no longer being revised, while current estimates are revised back to 2010 each year when the new year is added.  Currently, only the current population estimates are available via this package.
+
+### Usage
+
+The current population estimates are available using the `county_est()` function.  There are three different major data pulls that this function can do:
+
+1. Single county population estimates (including state totals).
+2. Data for Multiple Counties (including a pull for all counties).
+3. Multiple years for both of the two previous pull types.
+
+#### Single County Population Example
+
+In this example, we will pull the 2014 population estimate for Moffat county (FIPS: 81) and also demonstrate assigning it to an R object to be used by other functions or analyses.
+
+```{r, single_county}
+library(codemogAPI) # attached the package functions
+
+county_est(fips_list = 81, year_list = 2014) # will display the county estimates in the console
+
+moffat_2014=county_est(81, 2014) # assigns the resulting data to the object moffat_2014 and shows how to ignore argument names by including arguments in the proper order.
+
+```
+
+#### Population Estimates for Multiple Counties
+
+In this example we will pull the population estimate for the counties in the Denver MSA and then combine them into a total Denver MSA estimate for 2014.
+
+```{r}
+
+denverMSA_counties=c(1,5,13,14,19,31,35,47,59,93)
+msa_counties=county_est(fips_list = denverMSA_counties, year_list = 2014)
+
+
+```
