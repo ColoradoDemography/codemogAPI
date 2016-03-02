@@ -66,12 +66,18 @@ moffat_2014=county_est(81, 2014) # assigns the resulting data to the object moff
 
 #### Population Estimates for Multiple Counties
 
-In this example we will pull the population estimate for the counties in the Denver MSA and then combine them into a total Denver MSA estimate for 2014.
+In this example we will pull the population estimate for the counties in the Denver MSA and then combine them into a total Denver MSA estimate for 2014 to append to the .
 
 ```{r}
 
-denverMSA_counties=c(1,5,13,14,19,31,35,47,59,93)
-msa_counties=county_est(fips_list = denverMSA_counties, year_list = 2014)
+denverMSA_counties=c(1,5,13,14,19,31,35,47,59,93) # list of FIPS for counties in the 10-county Denver MSA
 
+msa_counties=county_est(fips_list = denverMSA_counties, year_list = 2014) # pulls data for those counties
+
+msa_counties # shows the results
+
+msa_total=as.data.frame(sum(msa_counties$totalPopulation) # creates a data frame with the total population of the MSA
+
+msa_table
 
 ```
