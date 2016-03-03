@@ -24,8 +24,8 @@ Eventually, this package will allow the use to pull any of the State Demography 
 
 Currently Included Data:
 
-* County Population estimates from 2010 to 2014 for Colorado Counties
-* Municipal Populations estimates from 2010 to 2014 in total or divided up into county specific parts.
+* County Population estimates from 2010 to 2014 for Colorado Counties (see vignette "Accessing Population Data")
+* Municipal Populations estimates from 2010 to 2014 in total or divided up into county specific parts. (see vignette "Accessing Population Data")
 
 
 ## Installation
@@ -39,45 +39,4 @@ if (packageVersion("devtools") < 1.6) {
     devtools::install_github("ColoradoDemography/codemogAPI")
 ```
 
-## County Population Estimates
 
-County population estimates are currently broken down into two datasets: historical populations (from 1980 to 2009) and current population estimates (2010 to 2014).  The difference involves revisions.  Historical data are no longer being revised, while current estimates are revised back to 2010 each year when the new year is added.  Currently, only the current population estimates are available via this package.
-
-### Usage
-
-The current population estimates are available using the `county_est()` function.  There are three different major data pulls that this function can do:
-
-1. Single county population estimates (including state totals).
-2. Data for Multiple Counties (including a pull for all counties).
-3. Multiple years for both of the two previous pull types.
-
-#### Single County Population Example
-
-In this example, we will pull the 2014 population estimate for Moffat county (FIPS: 81) and also demonstrate assigning it to an R object to be used by other functions or analyses.
-
-```{r, single_county}
-library(codemogAPI) # attached the package functions
-
-county_est(fips_list = 81, year_list = 2014) # will display the county estimates in the console
-
-moffat_2014=county_est(81, 2014) # assigns the resulting data to the object moffat_2014 and shows how to ignore argument names by including arguments in the proper order.
-
-```
-
-#### Population Estimates for Multiple Counties
-
-In this example we will pull the population estimate for the counties in the Denver MSA and then combine them into a total Denver MSA estimate for 2014 to append to the .
-
-```{r}
-
-denverMSA_counties=c(1,5,13,14,19,31,35,47,59,93) # list of FIPS for counties in the 10-county Denver MSA
-
-msa_counties=county_est(fips_list = denverMSA_counties, year_list = 2014) # pulls data for those counties
-
-msa_counties # shows the results
-
-msa_total=as.data.frame(sum(msa_counties$totalPopulation) # creates a data frame with the total population of the MSA
-
-msa_table
-
-```

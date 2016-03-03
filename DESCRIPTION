@@ -9,3 +9,5 @@ License: MIT + file LICENSE
 Imports: jsonlite
 Depends: dplyr
 LazyData: TRUE
+Suggests: knitr
+VignetteBuilder: knitr

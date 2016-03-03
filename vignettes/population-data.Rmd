@@ -1,0 +1,65 @@
+---
+title: "Accessing Population Data"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Accessing Population Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Accessing Population Data Using codemogAPI
+
+This vignette will walk through 
+
+## County Population Estimates
+
+County population estimates are currently broken down into two datasets: historical populations (from 1980 to 2009) and current population estimates (2010 to 2014).  The difference involves revisions.  Historical data are no longer being revised, while current estimates are revised back to 2010 each year when the new year is added.  Currently, only the current population estimates are available via this package.
+
+### Usage
+
+The current population estimates are available using the `county_est()` function.  There are three different major data pulls that this function can do:
+
+1. Single county population estimates (including state totals).
+2. Data for Multiple Counties (including a pull for all counties).
+3. Multiple years for both of the two previous pull types.
+
+#### Single County Population Example
+
+In this example, we will pull the 2014 population estimate for Moffat county (FIPS: 81) and also demonstrate assigning it to an R object to be used by other functions or analyses.
+
+```{r, single_county}
+library(codemogAPI) # attached the package functions
+
+moffat_2014=county_est(81, 2014) # provides the county fips and the 
+
+```
+
+#### Population Estimates for Multiple Counties
+
+In this example we will pull the 2014 population estimates for the counties in the Denver MSA.
+
+```{r}
+
+denverMSA_counties=c(1,5,13,14,19,31,35,47,59,93) # list of FIPS for counties in the 10-county Denver MSA
+
+msa_counties=county_est(fips_list = denverMSA_counties, year_list = 2014) # pulls data for those counties
+
+msa_counties # shows the results
+
+```
+
+#### Multiple Years of Population Estimates
+
+This section will repeat the prior two examples, but add all of the available years to generate a timeseries.
+
+```{r}
+
+denverMSA_counties=c(1,5,13,14,19,31,35,47,59,93) # list of FIPS for counties in the 10-county Denver MSA
+
+msa_counties=county_est(fips_list = denverMSA_counties, year_list = c(2010,2011,2012,2013,2014)) # pulls data for those counties
+
+msa_counties # shows the results
+
+```
