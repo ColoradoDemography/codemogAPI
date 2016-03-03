@@ -1,6 +1,6 @@
 #' API Wrapper to call Colorado municipal population estimates
 #'
-#' This API wrapper returns a dataframe of municipal populations for the years
+#' This API wrapper returns a dataframe of municipal populations and related variables for the years
 #'  and municipalities selected.
 #'
 #'  Note: Selecting all of the counties can be done by providing 300 as the fips_list
@@ -8,6 +8,7 @@
 #' @param fips_list Numeric FIPS code(s) for the municipality(ies). Leave blank and specify county to get all places in a county Defaults to blank
 #' @param year_list Numeric list of years between 2010 and 2014
 #' @param county county FIPS number used to pull either parts of a muni or all munis in a county if fips_list is blank Defaults to Blank
+#' @param vars list of variables to pull includes: totalpopulation, householdpopulation, groupquarterspopulation, totalhousingunits, occupiedhousingunits, and vacanthousingunits Defaults to totalpopulation
 #' @param totals controls whether API returns totals or parts of municipalities Defaults to "yes" to give totals not parts.
 #' @importFrom jsonlite fromJSON
 #' @import dplyr
@@ -15,7 +16,7 @@
 #' @export
 
 
-muni_est=function(fips_list="", year_list, county="", totals="yes"){
+muni_est=function(fips_list="", year_list, county="", vars="totalpopulation", totals="yes" ){
   # subject to change, but this is the server URL
   url_stub="http://red-meteor-147235.nitrousapp.com:4000/munipophousing?"
 
@@ -36,18 +37,17 @@ muni_est=function(fips_list="", year_list, county="", totals="yes"){
   call=paste0(url_stub,"year=", paste(year_list, collapse=","),
               "&placefips=", paste(fips_list, collapse=","),
               "&countyfips=", county,
+              "&stats=", paste(vars, collapse=","),
               "&compressed=",totals)
 
   # Makes the API call and converts the JSON to a data frame
   data=jsonlite::fromJSON(call, simplifyVector = TRUE)
   if(totals=="yes"){
   data=mutate(data, totalpopulation=as.numeric(totalpopulation))%>%
-      rename(totalPopulation=totalpopulation, municipality=municipalityname)%>%
-      select(placefips, municipality, year, totalPopulation)
+      rename(municipality=municipalityname)
   } else {
     data=mutate(data, totalpopulation=as.numeric(totalpopulation))%>%
-      rename(totalPopulation=totalpopulation, municipality=municipalityname)%>%
-      select(countyfips, placefips, municipality, year, totalPopulation)
+      rename(municipality=municipalityname)
   }
   # tells the function what to return and changes it from a dplyr tbl object back to a generic data frame
   return(as.data.frame(data))
