@@ -9,6 +9,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(codemogAPI)
+```
 # Accessing Population Data Using codemogAPI
 
 This vignette will walk through accessing population data through the Colorado State Demography Office APIs. The vignette will include accessing total population data, but also additional method specific variables.
@@ -33,7 +36,6 @@ The current population estimates are available using the `county_est()` function
 In this example, we will pull the 2014 population estimate for Moffat county (FIPS: 81) and also demonstrate assigning it to an R object to be used by other functions or analyses.
 
 ```{r, single_county}
-library(codemogAPI) # attached the package functions
 
 moffat_2014=county_est(81, 2014) # provides the county fips and the 
 

@@ -4,11 +4,17 @@ Title: API Wrapper for Colorado Demography Office APIs
 Version: 0.1.0
 Authors@R: person("Rob", "Kemp", email = "robert.kemp@state.co.us",
                   role = c("aut", "cre"))
-Description: This package provides access to the API for Colorado Demography Office and Census data APIs
+Description: This package provides access to the API for Colorado Demography
+    Office and Census data APIs
 License: MIT + file LICENSE
-Imports: jsonlite,
-         tidyr
-Depends: dplyr
+Imports:
+    jsonlite,
+    tidyr
+Depends:
+    dplyr
 LazyData: TRUE
-Suggests: knitr
+Suggests:
+    knitr,
+    rmarkdown
 VignetteBuilder: knitr
+RoxygenNote: 5.0.1
