@@ -11,7 +11,7 @@ vignette: >
 
 # Accessing Population Data Using codemogAPI
 
-This vignette will walk through 
+This vignette will walk through accessing population data through the Colorado State Demography Office APIs. The vignette will include accessing total population data, but also additional method specific variables.
 
 ## County Population Estimates
 
@@ -22,8 +22,11 @@ County population estimates are currently broken down into two datasets: histori
 The current population estimates are available using the `county_est()` function.  There are three different major data pulls that this function can do:
 
 1. Single county population estimates (including state totals).
+
 2. Data for Multiple Counties (including a pull for all counties).
+
 3. Multiple years for both of the two previous pull types.
+
 
 #### Single County Population Example
 
@@ -33,6 +36,8 @@ In this example, we will pull the 2014 population estimate for Moffat county (FI
 library(codemogAPI) # attached the package functions
 
 moffat_2014=county_est(81, 2014) # provides the county fips and the 
+
+moffat_2014
 
 ```
 
@@ -58,8 +63,99 @@ This section will repeat the prior two examples, but add all of the available ye
 
 denverMSA_counties=c(1,5,13,14,19,31,35,47,59,93) # list of FIPS for counties in the 10-county Denver MSA
 
-msa_counties=county_est(fips_list = denverMSA_counties, year_list = c(2010,2011,2012,2013,2014)) # pulls data for those counties
+msa_counties=county_est(fips_list = denverMSA_counties, year_list = c(2010:2014)) # pulls data for those counties
 
 msa_counties # shows the results
 
+```
+
+## Municipal (Place) Population Estimates
+
+Municipal population estimates are for legally incorporated places in Colorado and are available for total estimates as well as parts of municipalities by county (i.e. the Arapahoe portion of Aurora).  They will exist in two main datasets: a historical dataset that only contains total populations, but from 1980 to 2009 that will not be changed unless errors are discovered, and a current set that include total population, household population, group quarters population, average household size, total housing units, occupied housing units (households), and vacant housing units. Currently, only the current estimates are available via this package.
+
+### Usage
+
+THe current municipal estimates are available using the `muni_est.r()` function. This function contains the same time-based features as `county_est()`, but adds three slightly different features:
+
+1. Multiple Variables: The housing unit method used to derive the population estimates at the municipal level produce multiple data points that are all included in this data set. 
+
+2. Values for municipal totals and parts (broken down by county).
+
+3. All places within a county.
+
+#### Multiple Variables
+
+In this example, multiple variables are accessed for Arvada for 2010 and 2014.  The variables available include (written using the code needed to call them): totalpopulation, householdpopulation, groupquarterspopulation, householdsize, occupiedhousingunits (Households), and vacanthousingunits.
+
+```{r}
+
+aurora_all=muni_est(fips_list=4000, year_list=c(2010, 2014), vars=c("totalpopulation","totalhousingunits", "occupiedhousingunits"))
+
+aurora_all
+```
+
+
+#### Municipal Parts and Totals
+
+In Colorado, municipalities are allowed to cross county lines.  This creates an interesting situation where the SDO generates an estimate for each part of the municipality by county.  So there are three Aurora estimates for each year for Adams, Arapahoe, and Douglas counties.  The function provides the ability to get these parts of a municipality or simply the total for that municipality.  The below example uses Arvada and shows accesing the total and the parts of Arvada for 2012.
+
+```{r}
+arvada_total=muni_est(fips_list = 3455, year_list = 2012, totals = "yes")
+
+arvada_total
+
+arvada_parts=muni_est(fips_list = 3455, year_list = 2012, totals = "no")
+
+arvada_parts
+
+```
+
+#### All Municipalities in a County
+
+This example shows how to get all of the municipalities within Mesa County for the year 2014.  
+
+```{r}
+mesa_munis=muni_est(county = 77, year_list = 2014, totals = "no")
+
+mesa_munis
+
+```
+
+## County Profile Data
+
+A variety of data is used as inputs to the estimates process and is maintained as a result of the process.  The SDO makes those variables available in this dataset.
+
+**Profile Variables**:
+
+  - births
+  - deaths
+  - naturalincrease
+  - netmigration
+  - censusbuildingpermits
+  - groupquarterspopulation
+  - householdpopulation
+  - households
+  - householdsize
+  - totalhousingunits
+  - vacancyrate
+  - vacanthousingunits
+  
+### Usage
+
+The variables listed above are available using the `county_profile()` function.  The function has similar features to the population data functions and provides the ability to pull any or all of the available variables for any year from 1985 to the most recent vintage of estimates, for any county.  A couple examples below show how to use the function.
+
+```{r}
+
+laPlata_migration=county_profile(67, year_list = c(1985:2014), vars="netmigration")
+
+laPlata_migration
+ 
+```
+
+```{r}
+
+laPlata_buildingpermits2013=county_profile(67, year_list = 2013, vars="censusbuildingpermits")
+
+laPlata_buildingpermits2013
+ 
 ```
