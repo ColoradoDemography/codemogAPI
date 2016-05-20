@@ -57,17 +57,6 @@ county_profile = function(fips_list, year_list, vars = "", group="none") {
       data = county_names %>% inner_join(jsonlite::fromJSON(call, simplifyVector = TRUE), by = "countyfips")
     })
 
-    # Checks if the State Total call (0) is used and if so creates the total, otherwise fixes the type and
-    # naming for totalPopulation
-    # suppressWarnings(if (fips_list == 0) {
-    #     data = data %>% select(-vacancyrate, -householdsize) %>% tidyr::gather(variable, value, -countyfips:-year) %>%
-    #         group_by(year, variable) %>% summarize(value = sum(as.numeric(value))) %>% tidyr::spread(variable,
-    #         value) %>% mutate(householdsize = round(householdpopulation/households, 2), vacancyrate = round((vacanthousingunits/totalhousingunits) *
-    #         100, 2))
-    #     data = bind_cols(data.frame(countyfips = 0), data)
-    # } else {
-    #     data = data
-    # })
     # tells the function what to return and changes it from a dplyr tbl object back to a generic data
     # frame
     return(as.data.frame(data))
