@@ -18,26 +18,26 @@
 
 muni_est = function(fips_list = "", year_list, county = "", vars = "totalpopulation", totals = "yes") {
     # subject to change, but this is the server URL
-    url_stub = "http://red-meteor-147235.nitrousapp.com:4000/munipophousing?"
-    
+    url_stub = "https://gis.dola.colorado.gov/lookups/munipophousing?"
+
     # Type checks for each list so that we don't get any text sent to the API for a SQL Injection.
-    if (!is.numeric(fips_list) && fips_list != "") 
+    if (!is.numeric(fips_list) && fips_list != "")
         stop("FIPS should be numeric or blank.")
-    
-    if (!is.numeric(year_list)) 
+
+    if (!is.numeric(year_list))
         stop("Years should be numeric.")
-    
-    if (county != "") 
+
+    if (county != "")
         totals = "no"
-    
-    if (any(year_list < 2010) || any(year_list > 2014)) 
+
+    if (any(year_list < 2010) || any(year_list > 2014))
         stop("One or more year is out of range. Years should be between 2010 and 2014")
-    
+
     # Creates the URL for the API call
-    call = paste0(url_stub, "year=", paste(year_list, collapse = ","), "&placefips=", paste(fips_list, 
-        collapse = ","), "&countyfips=", county, "&stats=", paste(vars, collapse = ","), "&compressed=", 
+    call = paste0(url_stub, "year=", paste(year_list, collapse = ","), "&placefips=", paste(fips_list,
+        collapse = ","), "&countyfips=", county, "&stats=", paste(vars, collapse = ","), "&compressed=",
         totals)
-    
+
     # Makes the API call and converts the JSON to a data frame
     data = jsonlite::fromJSON(call, simplifyVector = TRUE)
     if (totals == "yes") {
@@ -48,5 +48,5 @@ muni_est = function(fips_list = "", year_list, county = "", vars = "totalpopulat
     # tells the function what to return and changes it from a dplyr tbl object back to a generic data
     # frame
     return(as.data.frame(data))
-    
-} 
+
+}
