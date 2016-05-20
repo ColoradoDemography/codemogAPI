@@ -17,7 +17,7 @@
 #' @export
 
 
-county_profile = function(fips_list, year_list, vars = "") {
+county_profile = function(fips_list, year_list, vars = "", group="none") {
     # subject to change, but this is the server URL
     url_stub = "https://gis.dola.colorado.gov/lookups/profile?"
 
@@ -41,23 +41,33 @@ county_profile = function(fips_list, year_list, vars = "") {
         fips = fips_list
     })
     # Creates the URL for the API call
-    call = paste0(url_stub, "&county=", paste(fips, collapse = ","), "&year=", paste(year_list, collapse = ","),
-        "&vars=", paste(vars, collapse = ","))
 
-    # Makes the API call and converts the JSON to a data frame
-    data = county_names %>% inner_join(jsonlite::fromJSON(call, simplifyVector = TRUE), by = "countyfips")
+
+    suppressWarnings(if (fips_list == 0){
+      call = paste0(url_stub, "&county=", paste(fips, collapse = ","), "&year=", paste(year_list, collapse = ","),
+                    "&vars=", paste(vars, collapse = ","), "&group=opt1")
+      data = jsonlite::fromJSON(call, simplifyVector = TRUE)
+      data$countyfips=rep(0, length(data$year))
+      data$county=rep("Colorado", length(data$year))
+
+    }else{
+      call = paste0(url_stub, "&county=", paste(fips, collapse = ","), "&year=", paste(year_list, collapse = ","),
+                    "&vars=", paste(vars, collapse = ","))
+      # Makes the API call and converts the JSON to a data frame
+      data = county_names %>% inner_join(jsonlite::fromJSON(call, simplifyVector = TRUE), by = "countyfips")
+    })
 
     # Checks if the State Total call (0) is used and if so creates the total, otherwise fixes the type and
     # naming for totalPopulation
-    suppressWarnings(if (fips_list == 0) {
-        data = data %>% select(-vacancyrate, -householdsize) %>% tidyr::gather(variable, value, -countyfips:-year) %>%
-            group_by(year, variable) %>% summarize(value = sum(as.numeric(value))) %>% tidyr::spread(variable,
-            value) %>% mutate(householdsize = round(householdpopulation/households, 2), vacancyrate = round((vacanthousingunits/totalhousingunits) *
-            100, 2))
-        data = bind_cols(data.frame(countyfips = 0), data)
-    } else {
-        data = data
-    })
+    # suppressWarnings(if (fips_list == 0) {
+    #     data = data %>% select(-vacancyrate, -householdsize) %>% tidyr::gather(variable, value, -countyfips:-year) %>%
+    #         group_by(year, variable) %>% summarize(value = sum(as.numeric(value))) %>% tidyr::spread(variable,
+    #         value) %>% mutate(householdsize = round(householdpopulation/households, 2), vacancyrate = round((vacanthousingunits/totalhousingunits) *
+    #         100, 2))
+    #     data = bind_cols(data.frame(countyfips = 0), data)
+    # } else {
+    #     data = data
+    # })
     # tells the function what to return and changes it from a dplyr tbl object back to a generic data
     # frame
     return(as.data.frame(data))
