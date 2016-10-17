@@ -43,11 +43,23 @@ suppressWarnings(if (fips_list == 300 | fips_list == 0) {
 
   fips = fips_list
 })
+
+# Checks for special call types 300 is for all years puts proper list together for call
+suppressWarnings(if (year_list == 300) {
+  year = c(1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,
+           2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,
+           2024,2025,2026,2027,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,2038,2039,2040,
+           2041,2042,2043,2044,2045,2046,2047,2048,2049,2050)
+)
+} else {
+
+  year = year_list
+})
 # Creates the URL for the API call
 
 
 suppressWarnings(if (fips_list == 0) {
-  call = paste0(url_stub, "&county=", paste(fips, collapse = ","), "&year=", paste(year_list, collapse = ","), "&group=opt3")
+  call = paste0(url_stub, "&county=", paste(fips, collapse = ","), "&year=", paste(year, collapse = ","), "&group=opt3")
   data = jsonlite::fromJSON(call, simplifyVector = TRUE)
   data$countyfips=rep(0, length(data$year))
   data$county=rep("Colorado", length(data$year))
