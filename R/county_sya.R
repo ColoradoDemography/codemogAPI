@@ -65,7 +65,7 @@ suppressWarnings(if (fips_list == 0) {
   data$county=rep("Colorado", length(data$year))
 
 }else{
-  call = paste0(url_stub, "&county=", paste(fips, collapse = ","), "&year=", paste(year_list, collapse = ","))
+  call = paste0(url_stub, "&county=", paste(fips, collapse = ","), "&year=", paste(year, collapse = ","))
   # Makes the API call and converts the JSON to a data frame
   data = jsonlite::fromJSON(call, simplifyVector = TRUE)
 })
