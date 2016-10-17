@@ -4,7 +4,7 @@
 \alias{county_profile}
 \title{API Wrapper to call Colorado County Demographic Profile Variables}
 \usage{
-county_profile(fips_list, year_list, vars = "")
+county_profile(fips_list, year_list, vars = "", group = "none")
 }
 \arguments{
 \item{fips_list}{Numeric FIPS code(s) for the county (0 for the state) (no leading 0's)}

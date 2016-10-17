@@ -2,6 +2,7 @@
 
 export(county_est)
 export(county_profile)
+export(county_sya)
 export(muni_est)
 import(dplyr)
 import(tidyr)
