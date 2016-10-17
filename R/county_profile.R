@@ -27,8 +27,8 @@ county_profile = function(fips_list, year_list, vars = "", group="none") {
     if (!is.numeric(year_list))
         stop("Years should be numeric.")
 
-    if (any(year_list < 1985) || any(year_list > 2014))
-        stop("One or more year is out of range. Years should be between 1985 and 2014")
+    if (any(year_list < 1985) || any(year_list > 2015))
+        stop("One or more year is out of range. Years should be between 1985 and 2015")
 
     # Checks for two special call types 300 is for all counties, 0 is for state total, puts proper list
     # together for call
