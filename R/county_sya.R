@@ -13,7 +13,7 @@
 #'
 #' @param fips_list Numeric FIPS code(s) for the county (0 for the state) (no leading 0's)
 #' @param year_list Numeric list of years between 1990 and 2050
-#' @param group string taking values of opt1, opt2, opt2, see descriptiong what what each does
+#' @param group string taking values of opt1, opt2, opt3, see descriptiong what what each does
 #' @importFrom jsonlite fromJSON
 #' @import tidyr
 #' @import dplyr

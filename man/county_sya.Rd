@@ -11,7 +11,7 @@ county_sya(fips_list, year_list, group = "none")
 
 \item{year_list}{Numeric list of years between 1990 and 2050}
 
-\item{group}{string taking values of opt1, opt2, opt2, see descriptiong what what each does}
+\item{group}{string taking values of opt1, opt2, opt3, see descriptiong what what each does}
 }
 \description{
 This API wrapper returns a dataframe of county-level age data.
