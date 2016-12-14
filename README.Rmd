@@ -16,7 +16,6 @@ knitr::opts_chunk$set(
 
 # codemogAPI R Package
 
-NOTE: This package and the APIs that it wraps are in constant development right now.  This package should not be used for any actual data work as the API server isn't currently at a stable URL. This note will be removed when this is finished and the version number bumped to 0.1.1 from 0.1.0.
 
 The `codemogAPI` package is built as the R interface to the Colorado State Demography Office data API set. 
 
