@@ -2,6 +2,7 @@
 
 export(county_coc)
 export(county_est)
+export(county_job_forecast)
 export(county_profile)
 export(county_sya)
 export(muni_est)
