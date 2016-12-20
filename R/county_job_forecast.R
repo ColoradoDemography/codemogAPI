@@ -1,13 +1,13 @@
-#' API Wrapper to call Colorado county job estimates
+#' API Wrapper to call Colorado county job forecasts
 #'
 #' This API wrapper returns a dataframe of county populations for the years
 #'  and counties selected.
 #'
 #'  Note: Selecting all of the counties can be done by providing 300 as the fips_list
+#'        The Denver Metro counties are included together as fips=500.
 #'
 #' @param fips_list Numeric FIPS code(s) for the county (0 for the state) (no leading 0's)
-#' @param year_list Numeric list of years between 2010 and 2014
-#' @param industry_list Numeric list of years between 2010 and 2014
+#' @param year_list Numeric list of years between 1990 and 2050
 #' @importFrom jsonlite fromJSON
 #' @import dplyr
 #'
@@ -25,7 +25,7 @@ county_job_forecast = function(fips_list, year_list) {
     stop("Years should be numeric.")
 
   if (any(year_list < 1990) || any(year_list > 2050))
-    stop("One or more year is out of range. Years should be between 2010 and 2014")
+    stop("One or more year is out of range. Years should be between 1990 and 2050")
 
   # Checks for two special call types 300 is for all counties, 0 is for state total, puts proper list
   # together for call
