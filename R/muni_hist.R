@@ -41,7 +41,7 @@ muni_hist = function(fips_list = "", year_list, county = "", vars = "totalpopula
   # Makes the API call and converts the JSON to a data frame
   data = jsonlite::fromJSON(call, simplifyVector = TRUE)
   if (totals == "yes") {
-    data = mutate(data, totalpopulation = as.numeric(totalpopulation)) %>% rename(municipality = municipalityname)
+    data = mutate(data, totalpopulation = as.numeric(totalpopulation)) %>% rename(municipality = municipalityname)%>%filter(!grepl("Total", municipality))
   } else {
     data = mutate(data, totalpopulation = as.numeric(totalpopulation)) %>% rename(municipality = municipalityname)
   }
