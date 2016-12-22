@@ -4,12 +4,14 @@
 \alias{county_jobs}
 \title{API Wrapper to call Colorado county job estimates}
 \usage{
-county_jobs(fips_list, year_list, sector_list = "00000")
+county_jobs(fips_list, year_list, sector_list = 0)
 }
 \arguments{
 \item{fips_list}{Numeric FIPS code(s) for the county (0 for the state) (no leading 0's)}
 
 \item{year_list}{Numeric list of years between 1990 and 2050}
+
+\item{sector_list}{Numeric list of sectors}
 }
 \description{
 This API wrapper returns a dataframe of county populations for the years
@@ -17,6 +19,5 @@ This API wrapper returns a dataframe of county populations for the years
 }
 \details{
 Note: Selecting all of the counties can be done by providing 300 as the fips_list
-       The Denver Metro counties are included together as fips=500.
 }
 
