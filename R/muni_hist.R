@@ -30,8 +30,8 @@ muni_hist = function(fips_list = "", year_list, county = "", vars = "totalpopula
   if (county != "")
     totals = "no"
 
-  if (any(year_list < 1980) || any(year_list > 2016))
-    stop("One or more year is out of range. Years should be between 1980 and 2014")
+  if (any(year_list < 1980) || any(year_list > 2017))
+    stop("One or more year is out of range. Years should be between 1980 and 2016")
 
   # Creates the URL for the API call
   call = paste0(url_stub, "year=", paste(year_list, collapse = ","), "&placefips=", paste(fips_list,
