@@ -6,7 +6,7 @@
 #'  Note: Selecting all of the counties can be done by providing 300 as the fips_list
 #'
 #' @param fips_list Numeric FIPS code(s) for the municipality(ies). Leave blank and specify county to get all places in a county Defaults to blank
-#' @param year_list Numeric list of years between 2010 and 2014
+#' @param year_list Numeric list of years between 2010 and 2016
 #' @param county county FIPS number used to pull either parts of a muni or all munis in a county if fips_list is blank Defaults to Blank
 #' @param vars list of variables to pull includes: totalpopulation, householdpopulation, groupquarterspopulation, householdsize totalhousingunits, occupiedhousingunits, and vacanthousingunits Defaults to totalpopulation
 #' @param totals controls whether API returns totals or parts of municipalities Defaults to 'yes' to give totals not parts.
@@ -30,8 +30,8 @@ muni_est = function(fips_list = "", year_list, county = "", vars = "totalpopulat
     if (county != "")
         totals = "no"
 
-    if (any(year_list < 2010) || any(year_list > 2015))
-        stop("One or more year is out of range. Years should be between 2010 and 2015")
+    if (any(year_list < 2010) || any(year_list > 2016))
+        stop("One or more year is out of range. Years should be between 2010 and 2016")
 
     # Creates the URL for the API call
     call = paste0(url_stub, "year=", paste(year_list, collapse = ","), "&placefips=", paste(fips_list,
