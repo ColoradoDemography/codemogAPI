@@ -40,4 +40,6 @@ if (packageVersion("devtools") < 1.6) {
     devtools::install_github("ColoradoDemography/codemogAPI", build_vignettes = FALSE)
 ```
 
+## Updates
 
+After updating codemogAPI, it's necessary to bash into shiny-server and run devtools::install_github("ColoradoDemography/codemogAPI") so the updates will take hold
