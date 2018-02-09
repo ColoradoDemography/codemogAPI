@@ -10,7 +10,7 @@
 #' @param county county FIPS number used to pull either parts of a muni or all munis in a county if fips_list is blank Defaults to Blank
 #' @param vars list of variables to pull includes: totalpopulation, householdpopulation, groupquarterspopulation, householdsize totalhousingunits, occupiedhousingunits, and vacanthousingunits Defaults to totalpopulation
 #' @param totals controls whether API returns totals or parts of municipalities Defaults to 'yes' to give totals not parts.
-#' @importFrom jsonlite fromJSON
+#' @importFrom jsonlite read_json
 #' @import dplyr
 #'
 #' @export
@@ -39,7 +39,7 @@ muni_est = function(fips_list = "", year_list, county = "", vars = "totalpopulat
         totals)
 
     # Makes the API call and converts the JSON to a data frame
-    data = jsonlite::fromJSON(call, simplifyVector = TRUE)
+    data = jsonlite::read_json(call, simplifyVector = TRUE)
     if (totals == "yes") {
         data = mutate(data, totalpopulation = as.numeric(totalpopulation)) %>% rename(municipality = municipalityname)
     } else {

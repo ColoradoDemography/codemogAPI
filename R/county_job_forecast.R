@@ -8,7 +8,7 @@
 #'
 #' @param fips_list Numeric FIPS code(s) for the county (0 for the state) (no leading 0's)
 #' @param year_list Numeric list of years between 1990 and 2050
-#' @importFrom jsonlite fromJSON
+#' @importFrom jsonlite read_json
 #' @import dplyr
 #'
 #' @export
@@ -41,7 +41,7 @@ county_job_forecast = function(fips_list, year_list) {
   call = paste0(url_stub, "year=", paste(year_list, collapse = ","), "&county=", paste(fips, collapse = ","))
 
   # Makes the API call and converts the JSON to a data frame
-  data = as.data.frame(jsonlite::fromJSON(call, simplifyVector = TRUE))
+  data = as.data.frame(jsonlite::read_json(call, simplifyVector = TRUE))
   # Checks if the State Total call (0) is used and if so creates the total, otherwise fixes the type and
   # naming for totalPopulation
   suppressWarnings(if (fips_list == 0) {

@@ -14,7 +14,7 @@
 #' @param fips_list Numeric FIPS code(s) for the county (0 for the state) (no leading 0's)
 #' @param year_list Numeric list of years between 1990 and 2050
 #' @param group string taking values of opt1, opt2, opt3, see descriptiong what what each does
-#' @importFrom jsonlite fromJSON
+#' @importFrom jsonlite read_json
 #' @import tidyr
 #' @import dplyr
 #'
@@ -58,14 +58,14 @@ suppressWarnings(if (year_list == 3000) {
 
 suppressWarnings(if (fips_list == 0) {
   call = paste0(url_stub, "county=", paste(fips,collapse = ","), "&year=",paste(year, collapse = ","), "&choice=single", "&group=opt3")
-  data = jsonlite::fromJSON(call, simplifyVector = TRUE)
+  data = jsonlite::read_json(call, simplifyVector = TRUE)
   data$countyfips=rep(0, length(data$year))
   data$county=rep("Colorado", length(data$year))
 
 }else{
   call = paste0(url_stub, "county=", paste(fips, collapse = ","), "&year=", paste(year, collapse = ","),"&choice=single")
   # Makes the API call and converts the JSON to a data frame
-  data = jsonlite::fromJSON(call, simplifyVector = TRUE)
+  data = jsonlite::read_json(call, simplifyVector = TRUE)
 })
 
 # tells the function what to return and changes it from a dplyr tbl object back to a generic data
