@@ -25,8 +25,8 @@ county_jobs = function(fips_list, year_list, sector_list=0) {
   if (!is.numeric(year_list))
     stop("Years should be numeric.")
 
-  if (any(year_list < 2000) || any(year_list > 2016))
-    stop("One or more year is out of range. Years should be between 2001 and 2016")
+  if (any(year_list < 2000) || any(year_list > 2020))
+    stop("One or more year is out of range. Years should be between 2001 and 2020")
 
   # Checks for two special call types 300 is for all counties, 0 is for state total, puts proper list
   # together for call
