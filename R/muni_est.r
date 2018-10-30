@@ -30,8 +30,8 @@ muni_est = function(fips_list = "", year_list, county = "", vars = "totalpopulat
     if (county != "")
         totals = "no"
 
-    if (any(year_list < 2010) || any(year_list > 2016))
-        stop("One or more year is out of range. Years should be between 2010 and 2016")
+    if (any(year_list < 2010) || any(year_list > 2020))
+        stop("One or more year is out of range. Years should be between 2010 and 2020")
 
     # Creates the URL for the API call
     call = paste0(url_stub, "year=", paste(year_list, collapse = ","), "&placefips=", paste(fips_list,
